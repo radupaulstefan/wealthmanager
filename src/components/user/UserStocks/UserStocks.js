@@ -2,24 +2,25 @@ import { ListGroup, Button } from 'react-bootstrap';
 import UserStockItemHeader from './UserStockItemHeader';
 import UserStockItemList from './UserStockItemList';
 import { useSelector } from 'react-redux';
+import { fetchStocks } from '../../../actions/userStocksActions';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import UserAddStockInput from './UserAddStockInput.js';
 
 const UserStocks = props => {
+  const dispatch = useDispatch();
   const userStocks = useSelector(
     state => state.currentUser.userInfo.netWorth.stocks
   );
-  const handleAddItem = () => {};
+  useEffect(() => {
+    dispatch(fetchStocks());
+  }, []);
   return (
     <>
-      <Button
-        onClick={handleAddItem}
-        className="align-self-start"
-        variant="secondary"
-      >
-        +
-      </Button>
       <ListGroup as="ul">
         <UserStockItemHeader></UserStockItemHeader>
         <UserStockItemList stockList={userStocks} />
+        <UserAddStockInput />
       </ListGroup>
     </>
   );

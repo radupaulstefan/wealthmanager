@@ -42,8 +42,21 @@ const currentUserSlice = createSlice({
     setUserUID(state, action) {
       state.userUID = action.payload;
     },
+    addUserNetWorthStock(state, action) {
+      state.userInfo.netWorth.stocks.push(action.payload);
+    },
+    deleteUserNetWorthStock(state, action) {
+      state.userInfo.netWorth.stocks = state.userInfo.netWorth.stocks.filter(
+        el => el.symbol !== action.payload.symbol
+      );
+    },
     setUserNetWorthStocks(state, action) {
       state.userInfo.netWorth.stocks = action.payload;
+    },
+    modifyUserNetWorthStockUnits(state, action) {
+      state.userInfo.netWorth.stocks.find(
+        el => el.symbol === action.payload.symbol
+      ).units = action.payload.units;
     },
   },
 });

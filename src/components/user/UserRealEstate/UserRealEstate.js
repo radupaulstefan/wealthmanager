@@ -6,13 +6,6 @@ const UserRealEstate = props => {
   const handleAddItem = () => {};
   return (
     <>
-      <Button
-        onClick={handleAddItem}
-        className="align-self-start"
-        variant="secondary"
-      >
-        +
-      </Button>
       <ListGroup as="ul">
         <UserRealEstateItemHeader />
         <UserRealEstateItemList />

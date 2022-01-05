@@ -1,9 +1,6 @@
-import { Button, Card, ListGroup, ButtonGroup } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
-import UserAddStockModal from './UserStocks/UserAddStockModal';
-import useHttp from '../../hooks/use-http';
-import { useSelector } from 'react-redux';
-import { currentUserActions } from '../../store/currentUser-slice';
+import { Button, Card, ButtonGroup } from 'react-bootstrap';
+import { useState } from 'react';
+import UserAddStockModal from './UserStocks/UserAddStockInput.js';
 import { useDispatch } from 'react-redux';
 import UserStocks from './UserStocks/UserStocks';
 import UserRealEstate from './UserRealEstate/UserRealEstate';
@@ -11,38 +8,9 @@ import UserCash from './UserCash/UserCash';
 import UserCrypto from './UserCrypto/UserCrypto';
 
 const UserNetWorth = props => {
-  const currentUser = useSelector(state => state.currentUser);
   const dispatch = useDispatch();
-  const [cardBody, setCardBody] = useState(null);
-  const { isLoading, error, sendRequest: requestFirebase } = useHttp();
+  const [cardBody, setCardBody] = useState(<UserStocks />);
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    const processRequestFirebaseResponse = responseObj => {
-      console.log(responseObj);
-      dispatch(
-        currentUserActions.setUserNetWorthStocks(
-          Object.values(responseObj).map(el => ({
-            symbol: el.symbol,
-            price: el.price,
-            units: el.units,
-          }))
-        )
-      );
-      setCardBody(<UserStocks />);
-    };
-    requestFirebase(
-      'fetch',
-      {
-        url: `https://react-http-7e1be-default-rtdb.firebaseio.com/users/${currentUser.userUID}/userData/netWorth/stocks.json`,
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-      processRequestFirebaseResponse
-    );
-  }, []);
 
   const handleStocksClicked = () => {
     setCardBody(<UserStocks />);
@@ -58,9 +26,6 @@ const UserNetWorth = props => {
   };
   const handleCommoditiesClicked = () => {
     setCardBody(null);
-  };
-  const handleAddStockClicked = () => {
-    setShowModal(true);
   };
   const handleModalSubmit = () => {
     setShowModal(false);
