@@ -1,28 +1,28 @@
 import { Col, Row, Container, Button, Form, InputGroup } from 'react-bootstrap';
-import { addStock } from '../../../actions/userStocksActions';
+import { addCash } from '../../../actions/userCashActions';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { SITE_THEME } from '../../../helpers/constants';
 
-const UserAddStockInput = props => {
+const UserAddCashInput = props => {
   const symbolRef = useRef();
-  const priceRef = useRef();
-  const unitRef = useRef();
+  const unitsRef = useRef();
+  const interestRateRef = useRef();
   const dispatch = useDispatch();
 
-  const handleAddStockSubmit = ev => {
+  const handleAddCashSubmit = ev => {
     ev.preventDefault();
     dispatch(
-      addStock({
+      addCash({
         symbol: symbolRef.current.value,
-        price: priceRef.current.value,
-        units: unitRef.current.value,
+        units: unitsRef.current.value,
+        interestRate: interestRateRef.current.value,
       })
     );
     symbolRef.current.focus();
     symbolRef.current.value = '';
-    priceRef.current.value = '';
-    unitRef.current.value = '';
+    unitsRef.current.value = '';
+    interestRateRef.current.value = '';
   };
   useEffect(() => {
     symbolRef.current.focus();
@@ -31,11 +31,11 @@ const UserAddStockInput = props => {
     <Container>
       <Row>
         <Col>
-          <Form onSubmit={handleAddStockSubmit}>
+          <Form onSubmit={handleAddCashSubmit}>
             <InputGroup>
-              <Form.Control ref={symbolRef} placeholder="Symbol" />
-              <Form.Control ref={priceRef} placeholder="Price" />
-              <Form.Control ref={unitRef} placeholder="Unit" />
+              <Form.Control ref={symbolRef} placeholder="currency" />
+              <Form.Control ref={unitsRef} placeholder="Amount" />
+              <Form.Control ref={interestRateRef} placeholder="Interest Rate" />
               <Button type="submit" size="sm" variant={`outline-${SITE_THEME}`}>
                 +
               </Button>
@@ -47,4 +47,4 @@ const UserAddStockInput = props => {
   );
 };
 
-export default UserAddStockInput;
+export default UserAddCashInput;

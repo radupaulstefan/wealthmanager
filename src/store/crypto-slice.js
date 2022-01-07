@@ -1,28 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialStocksState = { items: [] };
+const initialCryptoState = { items: [] };
 
-const stocksSlice = createSlice({
-  name: 'stocks',
-  initialState: initialStocksState,
+const cryptoSlice = createSlice({
+  name: 'crypto',
+  initialState: initialCryptoState,
   reducers: {
-    addStock(state, action) {
+    addCrypto(state, action) {
       state.items.push(action.payload);
     },
-    deleteStock(state, action) {
+    deleteCrypto(state, action) {
       state.items = state.items.filter(
         el => el.symbol !== action.payload.symbol
       );
     },
-    setStocks(state, action) {
+    setCrypto(state, action) {
       state.items = action.payload;
     },
-    modifyStockUnits(state, action) {
+    modifyCryptoUnits(state, action) {
       state.items.find(el => el.symbol === action.payload.symbol).units =
         action.payload.units;
     },
   },
 });
 
-export const stocksActions = stocksSlice.actions;
-export default stocksSlice.reducer;
+export const cryptoActions = cryptoSlice.actions;
+export default cryptoSlice.reducer;

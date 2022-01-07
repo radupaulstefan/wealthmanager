@@ -4,7 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import UserPage from './pages/UserPage';
+import UserNetWorthPage from './pages/UserNetWorthPage';
+import UserBudgetPage from './pages/UserBudgetPage';
+import UserPlannerPage from './pages/UserPlannerPage';
 import SignUpPage from './pages/SignUpPage';
 
 const App = () => {
@@ -20,8 +22,14 @@ const App = () => {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/user">
-          <UserPage />
+        <Route path="/networth">
+          <UserNetWorthPage />
+        </Route>
+        <Route path="/budget">
+          <UserBudgetPage />
+        </Route>
+        <Route path="/planner">
+          <UserPlannerPage />
         </Route>
         <Route path="/logout">
           <Redirect to="/home" />

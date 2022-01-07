@@ -1,13 +1,7 @@
-import {
-  Col,
-  InputGroup,
-  FormControl,
-  Button,
-  Row,
-  Container,
-} from 'react-bootstrap';
+import { Col, FormControl, Row, Container } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react';
+import { SITE_THEME } from '../../../helpers/constants';
 
 const UserRealEstateItem = props => {
   const [monthlyDebt, setMonthlyDebt] = useState(0);
@@ -28,16 +22,16 @@ const UserRealEstateItem = props => {
   return (
     <Container>
       <Row>
-        <Col className="border border-secondary">{props.country}</Col>
-        <Col className="border border-secondary">{props.city}</Col>
-        <Col className="border border-secondary">{props.type}</Col>
-        <Col className="border border-secondary">
+        <Col className={`border border-${SITE_THEME}`}>{props.country}</Col>
+        <Col className={`border border-${SITE_THEME}`}>{props.city}</Col>
+        <Col className={`border border-${SITE_THEME}`}>{props.type}</Col>
+        <Col className={`border border-${SITE_THEME}`}>
           <FormControl onChange={handleMonthlyDebtChange} placeholder="0" />
         </Col>
-        <Col className="border border-secondary">
+        <Col className={`border border-${SITE_THEME}`}>
           <FormControl onChange={handleMonthlyRentChange} placeholder="0" />
         </Col>
-        <Col className="border border-secondary">{cashflow}</Col>
+        <Col className={`border border-${SITE_THEME}`}>{cashflow}</Col>
       </Row>
     </Container>
   );

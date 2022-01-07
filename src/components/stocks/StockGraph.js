@@ -7,7 +7,7 @@ import useHttp from '../../hooks/use-http';
 
 const StockGraph = props => {
   const [priceData, setPriceData] = useState([]);
-  const currentStock = useSelector(state => state.stocks.currentStock);
+  const currentStock = useSelector(state => state.homePageStocks.currentStock);
   const options = { style: 'currency', currency: 'USD' };
   const numberFormat = new Intl.NumberFormat('en-US', options);
   const { isLoading, error, sendRequest: getStockGraph } = useHttp();

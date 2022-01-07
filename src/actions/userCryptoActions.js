@@ -1,25 +1,25 @@
-import { stocksActions } from '../store/stocks-slice';
+import { cryptoActions } from '../store/crypto-slice';
 import { DATABASE_BASE_URL } from '../helpers/constants';
 
-export const addStock = stock => {
+export const addCrypto = crypto => {
   return (dispatch, getState) => {
     const state = getState();
     return fetch(
       DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/stocks.json`,
+        `/users/${state.currentUser.userUID}/netWorth/crypto.json`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(stock),
+        body: JSON.stringify(crypto),
       }
     )
       .then(response => response.json())
       .then(result => {
         dispatch(
-          stocksActions.addStock({
-            ...stock,
+          cryptoActions.addCrypto({
+            ...crypto,
             generatedId: result.name,
           })
         );
@@ -27,12 +27,12 @@ export const addStock = stock => {
   };
 };
 
-export const fetchStocks = () => {
+export const fetchCrypto = () => {
   return (dispatch, getState) => {
     const state = getState();
     fetch(
       DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/stocks.json`,
+        `/users/${state.currentUser.userUID}/netWorth/crypto.json`,
       {
         method: 'GET',
         headers: {
@@ -45,12 +45,12 @@ export const fetchStocks = () => {
         if (result) {
           const keys = Object.keys(result);
           dispatch(
-            stocksActions.setStocks(
+            cryptoActions.setCrypto(
               Object.values(result).map((el, index) => ({
                 generatedId: keys[index],
-                price: el.price,
-                symbol: el.symbol,
                 units: el.units,
+                symbol: el.symbol,
+                price: el.price,
               }))
             )
           );
@@ -59,13 +59,13 @@ export const fetchStocks = () => {
   };
 };
 
-export const deleteStock = symbol => {
+export const deleteCrypto = symbol => {
   return (dispatch, getState) => {
     const state = getState();
-    const stockToDelete = state.stocks.items.find(el => el.symbol === symbol);
+    const cryptoToDelete = state.crypto.items.find(el => el.symbol === symbol);
     return fetch(
       DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/stocks/${stockToDelete.generatedId}.json`,
+        `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToDelete.generatedId}.json`,
       {
         method: 'DELETE',
         headers: {
@@ -75,19 +75,19 @@ export const deleteStock = symbol => {
     )
       .then(response => response.json())
       .then(result => {
-        dispatch(stocksActions.deleteStock(stockToDelete));
+        dispatch(cryptoActions.deleteCrypto(cryptoToDelete));
       });
   };
 };
 
-export const changeStockUnits = (symbol, newUnits) => {
+export const changeCryptoUnits = (symbol, newUnits) => {
   return (dispatch, getState) => {
     const state = getState();
-    const stockToChange = state.stocks.items.find(el => el.symbol === symbol);
+    const cryptoToChange = state.crypto.items.find(el => el.symbol === symbol);
     if (newUnits >= 0)
       return fetch(
         DATABASE_BASE_URL +
-          `/users/${state.currentUser.userUID}/netWorth/stocks/${stockToChange.generatedId}/.json`,
+          `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToChange.generatedId}/.json`,
         {
           method: 'PATCH',
           headers: {
@@ -101,7 +101,7 @@ export const changeStockUnits = (symbol, newUnits) => {
         .then(response => response.json())
         .then(result => {
           dispatch(
-            stocksActions.modifyStockUnits({
+            cryptoActions.modifyCryptoUnits({
               symbol: symbol,
               units: newUnits,
             })
@@ -110,59 +110,59 @@ export const changeStockUnits = (symbol, newUnits) => {
   };
 };
 
-export const incrementStockUnits = symbol => {
+export const incrementCryptoUnits = symbol => {
   return (dispatch, getState) => {
     const state = getState();
-    const stockToChange = state.stocks.items.find(el => el.symbol === symbol);
+    const cryptoToChange = state.crypto.items.find(el => el.symbol === symbol);
     return fetch(
       DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/stocks/${stockToChange.generatedId}/.json`,
+        `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToChange.generatedId}/.json`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          units: +stockToChange.units + 1,
+          units: +cryptoToChange.units + 1,
         }),
       }
     )
       .then(response => response.json())
       .then(result => {
         dispatch(
-          stocksActions.modifyStockUnits({
+          cryptoActions.modifyCryptoUnits({
             symbol: symbol,
-            units: +stockToChange.units + 1,
+            units: +cryptoToChange.units + 1,
           })
         );
       });
   };
 };
 
-export const decrementStockUnits = symbol => {
+export const decrementCryptoUnits = symbol => {
   return (dispatch, getState) => {
     const state = getState();
-    const stockToChange = state.stocks.items.find(el => el.symbol === symbol);
-    if (+stockToChange.units - 1 >= 0)
+    const cryptoToChange = state.crypto.items.find(el => el.symbol === symbol);
+    if (+cryptoToChange.units - 1 >= 0)
       return fetch(
         DATABASE_BASE_URL +
-          `/users/${state.currentUser.userUID}/netWorth/stocks/${stockToChange.generatedId}/.json`,
+          `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToChange.generatedId}/.json`,
         {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            units: +stockToChange.units - 1,
+            units: +cryptoToChange.units - 1,
           }),
         }
       )
         .then(response => response.json())
         .then(result => {
           dispatch(
-            stocksActions.modifyStockUnits({
+            cryptoActions.modifyCryptoUnits({
               symbol: symbol,
-              units: +stockToChange.units - 1,
+              units: +cryptoToChange.units - 1,
             })
           );
         });

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Card, Spinner } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { useSelector, useDispatch } from 'react-redux';
-import { stocksActions } from '../../store/stocks-slice';
+import { homePageStocksActions } from '../../store/homePageStocks-slice';
 import useHttp from '../../hooks/use-http';
 
 const DUMMY_STOCKS = [
@@ -81,7 +81,7 @@ const DUMMY_STOCKS = [
 
 const Stocks = () => {
   const dispatch = useDispatch();
-  const tableData = useSelector(state => state.stocks.tableData);
+  const tableData = useSelector(state => state.homePageStocks.tableData);
   const { isLoading, error, sendRequest: getStocks } = useHttp();
 
   useEffect(() => {
@@ -112,11 +112,11 @@ const Stocks = () => {
     //   },
     //   transformStocks
     // );
-    dispatch(stocksActions.setTableData(DUMMY_STOCKS));
+    dispatch(homePageStocksActions.setTableData(DUMMY_STOCKS));
   }, [dispatch]);
 
   const rowClickHandler = (e, row, rowIndex) => {
-    dispatch(stocksActions.setCurrentStock(row.symbol));
+    dispatch(homePageStocksActions.setCurrentStock(row.symbol));
   };
 
   const tableColumns = [

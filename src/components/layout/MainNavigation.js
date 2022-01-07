@@ -2,6 +2,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { currentUserActions } from '../../store/currentUser-slice';
+import { SITE_THEME } from '../../helpers/constants';
 
 const MainNavigation = () => {
   const userLoggedIn = useSelector(state => {
@@ -10,12 +11,12 @@ const MainNavigation = () => {
   const dispatch = useDispatch();
 
   const handleLogoutClick = () => {
-    dispatch(currentUserActions.setUserLoggedIn(false));
+    dispatch(currentUserActions.logout());
   };
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg={`${SITE_THEME}`} variant={`${SITE_THEME}`}>
         <Navbar.Brand as={Link} to="/home">
           WealthManager
         </Navbar.Brand>
@@ -26,7 +27,7 @@ const MainNavigation = () => {
             </Nav.Link>
           )}
           {userLoggedIn && (
-            <Nav.Link as={Link} to="/user">
+            <Nav.Link as={Link} to="/networth">
               My Portofolio
             </Nav.Link>
           )}

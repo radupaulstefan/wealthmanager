@@ -1,16 +1,13 @@
-import { Button, Card, ButtonGroup } from 'react-bootstrap';
+import { Button, Card, ButtonGroup, Col, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import UserAddStockModal from './UserStocks/UserAddStockInput.js';
-import { useDispatch } from 'react-redux';
 import UserStocks from './UserStocks/UserStocks';
 import UserRealEstate from './UserRealEstate/UserRealEstate';
 import UserCash from './UserCash/UserCash';
 import UserCrypto from './UserCrypto/UserCrypto';
+import { SITE_THEME } from '../../helpers/constants';
 
 const UserNetWorth = props => {
-  const dispatch = useDispatch();
   const [cardBody, setCardBody] = useState(<UserStocks />);
-  const [showModal, setShowModal] = useState(false);
 
   const handleStocksClicked = () => {
     setCardBody(<UserStocks />);
@@ -27,34 +24,60 @@ const UserNetWorth = props => {
   const handleCommoditiesClicked = () => {
     setCardBody(null);
   };
-  const handleModalSubmit = () => {
-    setShowModal(false);
-  };
   return (
-    <Card bg="white">
-      <Card.Body>
-        <Card.Title>Net Worth</Card.Title>
-        <ButtonGroup>
-          <Button onClick={handleStocksClicked} variant="secondary">
-            Stocks
-          </Button>{' '}
-          <Button onClick={handleCryptoClicked} variant="secondary">
-            Crypto
-          </Button>{' '}
-          <Button onClick={handleRealEstateClicked} variant="secondary">
-            Real Estate
-          </Button>{' '}
-          <Button onClick={handleCashClicked} variant="secondary">
-            Cash
-          </Button>{' '}
-          <Button onClick={handleCommoditiesClicked} variant="secondary">
-            Commodities
-          </Button>{' '}
-        </ButtonGroup>
-        <Card>{cardBody}</Card>
-      </Card.Body>
-      {showModal && <UserAddStockModal onSubmit={handleModalSubmit} />}
-    </Card>
+    <Row>
+      <Col>
+        <Card bg="white">
+          <Card.Body>
+            <Card.Title>Net Worth</Card.Title>
+            <ButtonGroup>
+              <Button
+                style={{ borderRadius: '0' }}
+                onClick={handleStocksClicked}
+                // onMouseEnter={handleStocksClicked}
+                variant={`outline-${SITE_THEME}`}
+              >
+                Stocks
+              </Button>{' '}
+              <Button
+                style={{ borderRadius: '0' }}
+                onClick={handleCryptoClicked}
+                // onMouseEnter={handleCryptoClicked}
+                variant={`outline-${SITE_THEME}`}
+              >
+                Crypto
+              </Button>{' '}
+              <Button
+                style={{ borderRadius: '0' }}
+                onClick={handleRealEstateClicked}
+                // onMouseEnter={handleRealEstateClicked}
+                variant={`outline-${SITE_THEME}`}
+              >
+                Real Estate
+              </Button>{' '}
+              <Button
+                style={{ borderRadius: '0' }}
+                onClick={handleCashClicked}
+                // onMouseEnter={handleCashClicked}
+                variant={`outline-${SITE_THEME}`}
+              >
+                Cash
+              </Button>{' '}
+              <Button
+                style={{ borderRadius: '0' }}
+                onClick={handleCommoditiesClicked}
+                // onMouseEnter={handleCommoditiesClicked}
+                variant={`outline-${SITE_THEME}`}
+              >
+                Commodities
+              </Button>{' '}
+            </ButtonGroup>
+            <Card className="p-2">{cardBody}</Card>
+          </Card.Body>
+        </Card>
+      </Col>
+      <Col></Col>
+    </Row>
   );
 };
 

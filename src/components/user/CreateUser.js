@@ -5,6 +5,7 @@ import { currentUserActions } from '../../store/currentUser-slice';
 import { useHistory } from 'react-router';
 import useHttp from '../../hooks/use-http';
 import { Link } from 'react-router-dom';
+import { SITE_THEME } from '../../helpers/constants';
 
 const CreateUser = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const CreateUser = () => {
       );
       dispatch(currentUserActions.setUserUID(createAccountObj.localId));
       history.push({
-        pathname: 'user',
+        pathname: 'networth',
       });
     };
 
@@ -141,7 +142,7 @@ const CreateUser = () => {
             </Form.Text>
           </Form.Group>
           {!isLoading && (
-            <Button variant="secondary" type="submit">
+            <Button variant={`${SITE_THEME}`} type="submit">
               Create account
             </Button>
           )}{' '}

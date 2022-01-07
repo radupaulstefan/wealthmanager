@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { currentUserActions } from '../../store/currentUser-slice';
 import { useHistory } from 'react-router';
 import useHttp from '../../hooks/use-http';
+import { SITE_THEME } from '../../helpers/constants';
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Auth = () => {
       dispatch(currentUserActions.setUserTokenId(responseObj.idToken));
       dispatch(currentUserActions.setUserUID(responseObj.localId));
       history.push({
-        pathname: 'user',
+        pathname: 'networth',
       });
     };
 
@@ -113,10 +114,14 @@ const Auth = () => {
               onChange={handlePasswordChange}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant={`${SITE_THEME}`} type="submit">
             Sign In
           </Button>{' '}
-          <Button onClick={handleSignUp} variant="secondary" type="submit">
+          <Button
+            onClick={handleSignUp}
+            variant={`${SITE_THEME}`}
+            type="submit"
+          >
             Sign Up
           </Button>
           {isLoading && <p>Logging In...</p>}

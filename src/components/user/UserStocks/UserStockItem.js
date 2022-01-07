@@ -1,12 +1,5 @@
-import { useState } from 'react';
-import {
-  Col,
-  InputGroup,
-  FormControl,
-  Button,
-  Row,
-  Container,
-} from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Col, Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import {
   deleteStock,
@@ -14,16 +7,22 @@ import {
   incrementStockUnits,
   decrementStockUnits,
 } from '../../../actions/userStocksActions';
+import UnitsInput from '../../UI/UnitsInput';
+import FinancialInstrumentFrame from '../../UI/FinancialInstrumentFrame';
+import { SITE_THEME } from '../../../helpers/constants';
+import { useSelector } from 'react-redux';
 
 const UserStockItem = props => {
   const dispatch = useDispatch();
   const [symbol, setSymbol] = useState(props.symbol);
-  const handleRemoveItemClick = ev => {
+  const stocks = useSelector(state => state.stocks.items);
+
+  const handleRemoveItemClick = () => {
     dispatch(deleteStock(symbol));
   };
 
-  const handleStockUnitsChange = ev => {
-    dispatch(changeStockUnits(symbol, ev.target.value));
+  const handleStockUnitsChange = value => {
+    dispatch(changeStockUnits(symbol, value));
   };
 
   const handlePlusButtonClick = () => {
@@ -32,6 +31,9 @@ const UserStockItem = props => {
   const handleMinusButtonClick = () => {
     dispatch(decrementStockUnits(symbol));
   };
+  useEffect(() => {
+    setSymbol(props.symbol);
+  }, [stocks]);
 
   if (props.units === 0) {
     dispatch(deleteStock(symbol));
@@ -39,49 +41,25 @@ const UserStockItem = props => {
 
   return (
     <Container>
-      <Row>
-        <Col className="border border-secondary">{props.symbol}</Col>
-        <Col className="border border-secondary">{props.price}</Col>
-        <Col className="border border-secondary">
-          <InputGroup>
-            <FormControl
-              placeholder="0"
-              aria-label=""
-              onChange={handleStockUnitsChange}
-              value={props.units}
-            />
-
-            <Button
-              onClick={handleMinusButtonClick}
-              size="sm"
-              variant="outline-secondary"
-            >
-              -
-            </Button>
-            <Button
-              onClick={handlePlusButtonClick}
-              size="sm"
-              variant="outline-secondary"
-            >
-              +
-            </Button>
-          </InputGroup>
+      <FinancialInstrumentFrame onRemoveItemClick={handleRemoveItemClick}>
+        <Col md="2" className={`border border-${SITE_THEME}`}>
+          {props.symbol}
         </Col>
-        <Col className="border border-secondary">
-          <Row>
-            <Col>{(props.price * props.units).toFixed(2)}</Col>
-            <Col>
-              <Button
-                onClick={handleRemoveItemClick}
-                size="sm"
-                variant="secondary"
-              >
-                X
-              </Button>
-            </Col>
-          </Row>
+        <Col md="2" className={`border border-${SITE_THEME}`}>
+          {props.price}
         </Col>
-      </Row>
+        <Col md="4" className={`border border-${SITE_THEME}`}>
+          <UnitsInput
+            onChange={handleStockUnitsChange}
+            onPlusClick={handlePlusButtonClick}
+            onMinusClick={handleMinusButtonClick}
+            units={props.units}
+          />
+        </Col>
+        <Col md="3" className={`border border-${SITE_THEME}`}>
+          <Col>{(props.price * props.units).toFixed(2)}</Col>
+        </Col>
+      </FinancialInstrumentFrame>
     </Container>
   );
 };

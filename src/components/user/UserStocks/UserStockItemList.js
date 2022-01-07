@@ -4,7 +4,7 @@ const UserStockItemList = props => {
     <>
       {props.stockList.map((el, index) => (
         <UserStockItem
-          key={`stock-itemo-${index}`}
+          key={`stock-item-${index}`}
           symbol={el.symbol}
           price={el.price}
           units={el.units}

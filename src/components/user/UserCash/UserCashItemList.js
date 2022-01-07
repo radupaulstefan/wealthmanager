@@ -2,9 +2,15 @@ import UserCashItem from './UserCashItem';
 const UserCashItemList = props => {
   return (
     <>
-      <UserCashItem currency="USD" annualInflation={5} />
-      <UserCashItem currency="EUR" annualInflation={7} />
-      <UserCashItem currency="RON" annualInflation={10} />
+      {props.cashList.map((el, index) => (
+        <UserCashItem
+          key={`cash-item-${index}`}
+          symbol={el.symbol}
+          units={el.units}
+          interestRate={el.interestRate}
+          annualInflation={4.8}
+        />
+      ))}
     </>
   );
 };

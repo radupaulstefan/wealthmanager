@@ -1,19 +1,19 @@
 import { Col, Row, Container, Button, Form, InputGroup } from 'react-bootstrap';
-import { addStock } from '../../../actions/userStocksActions';
+import { addCrypto } from '../../../actions/userCryptoActions';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { SITE_THEME } from '../../../helpers/constants';
 
-const UserAddStockInput = props => {
+const UserAddCryptoInput = props => {
   const symbolRef = useRef();
   const priceRef = useRef();
   const unitRef = useRef();
   const dispatch = useDispatch();
 
-  const handleAddStockSubmit = ev => {
+  const handleAddCryptoSubmit = ev => {
     ev.preventDefault();
     dispatch(
-      addStock({
+      addCrypto({
         symbol: symbolRef.current.value,
         price: priceRef.current.value,
         units: unitRef.current.value,
@@ -31,7 +31,7 @@ const UserAddStockInput = props => {
     <Container>
       <Row>
         <Col>
-          <Form onSubmit={handleAddStockSubmit}>
+          <Form onSubmit={handleAddCryptoSubmit}>
             <InputGroup>
               <Form.Control ref={symbolRef} placeholder="Symbol" />
               <Form.Control ref={priceRef} placeholder="Price" />
@@ -47,4 +47,4 @@ const UserAddStockInput = props => {
   );
 };
 
-export default UserAddStockInput;
+export default UserAddCryptoInput;

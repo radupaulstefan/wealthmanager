@@ -9,9 +9,7 @@ import UserAddStockInput from './UserAddStockInput.js';
 
 const UserStocks = props => {
   const dispatch = useDispatch();
-  const userStocks = useSelector(
-    state => state.currentUser.userInfo.netWorth.stocks
-  );
+  const userStocks = useSelector(state => state.stocks.items);
   useEffect(() => {
     dispatch(fetchStocks());
   }, []);
