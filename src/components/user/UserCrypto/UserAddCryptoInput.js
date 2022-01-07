@@ -24,9 +24,7 @@ const UserAddCryptoInput = props => {
     priceRef.current.value = '';
     unitRef.current.value = '';
   };
-  useEffect(() => {
-    symbolRef.current.focus();
-  }, []);
+
   return (
     <Container>
       <Row>

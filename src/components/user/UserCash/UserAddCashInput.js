@@ -24,9 +24,7 @@ const UserAddCashInput = props => {
     unitsRef.current.value = '';
     interestRateRef.current.value = '';
   };
-  useEffect(() => {
-    symbolRef.current.focus();
-  }, []);
+
   return (
     <Container>
       <Row>
