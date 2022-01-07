@@ -12,12 +12,19 @@ const MainNavigation = () => {
 
   const handleLogoutClick = () => {
     dispatch(currentUserActions.logout());
+    dispatch(currentUserActions.setHomePageMode(false));
   };
 
   return (
     <>
       <Navbar bg={`${SITE_THEME}`} variant={`${SITE_THEME}`}>
-        <Navbar.Brand as={Link} to="/home">
+        <Navbar.Brand
+          onClick={() => {
+            dispatch(currentUserActions.setHomePageMode(false));
+          }}
+          as={Link}
+          to="/home"
+        >
           WealthManager
         </Navbar.Brand>
         <Nav className="me-auto">
@@ -27,7 +34,13 @@ const MainNavigation = () => {
             </Nav.Link>
           )}
           {userLoggedIn && (
-            <Nav.Link as={Link} to="/networth">
+            <Nav.Link
+              onClick={() => {
+                dispatch(currentUserActions.setHomePageMode(true));
+              }}
+              as={Link}
+              to="/networth"
+            >
               My Portofolio
             </Nav.Link>
           )}

@@ -30,53 +30,45 @@ const UserNetWorth = props => {
         <Card bg="white">
           <Card.Body>
             <Card.Title>Net Worth</Card.Title>
-            <ButtonGroup>
-              <Button
-                style={{ borderRadius: '0' }}
-                onClick={handleStocksClicked}
-                // onMouseEnter={handleStocksClicked}
-                variant={`outline-${SITE_THEME}`}
-              >
-                Stocks
-              </Button>{' '}
-              <Button
-                style={{ borderRadius: '0' }}
-                onClick={handleCryptoClicked}
-                // onMouseEnter={handleCryptoClicked}
-                variant={`outline-${SITE_THEME}`}
-              >
-                Crypto
-              </Button>{' '}
-              <Button
-                style={{ borderRadius: '0' }}
-                onClick={handleRealEstateClicked}
-                // onMouseEnter={handleRealEstateClicked}
-                variant={`outline-${SITE_THEME}`}
-              >
-                Real Estate
-              </Button>{' '}
-              <Button
-                style={{ borderRadius: '0' }}
-                onClick={handleCashClicked}
-                // onMouseEnter={handleCashClicked}
-                variant={`outline-${SITE_THEME}`}
-              >
-                Cash
-              </Button>{' '}
-              <Button
-                style={{ borderRadius: '0' }}
-                onClick={handleCommoditiesClicked}
-                // onMouseEnter={handleCommoditiesClicked}
-                variant={`outline-${SITE_THEME}`}
-              >
-                Commodities
-              </Button>{' '}
-            </ButtonGroup>
+            <Button
+              // style={{ borderRadius: '0' }}
+              onClick={handleStocksClicked}
+              variant={`${SITE_THEME}`}
+            >
+              Stocks
+            </Button>{' '}
+            <Button
+              // style={{ borderRadius: '0' }}
+              onClick={handleCryptoClicked}
+              variant={`${SITE_THEME}`}
+            >
+              Crypto
+            </Button>{' '}
+            <Button
+              // style={{ borderRadius: '0' }}
+              onClick={handleRealEstateClicked}
+              variant={`${SITE_THEME}`}
+            >
+              Real Estate
+            </Button>{' '}
+            <Button
+              // style={{ borderRadius: '0' }}
+              onClick={handleCashClicked}
+              variant={`${SITE_THEME}`}
+            >
+              Cash
+            </Button>{' '}
+            <Button
+              // style={{ borderRadius: '0' }}
+              onClick={handleCommoditiesClicked}
+              variant={`${SITE_THEME}`}
+            >
+              Commodities
+            </Button>{' '}
             <Card className="p-2">{cardBody}</Card>
           </Card.Body>
         </Card>
       </Col>
-      <Col></Col>
     </Row>
   );
 };

@@ -5,6 +5,7 @@ const initialUserState = {
   userTokenId: null,
   userDisplayName: null,
   userUID: null,
+  homePageMode: true,
 };
 
 const currentUserSlice = createSlice({
@@ -14,6 +15,9 @@ const currentUserSlice = createSlice({
     logout(state, action) {},
     setUserLoggedIn(state, action) {
       state.userLoggedIn = action.payload;
+    },
+    setHomePageMode(state, action) {
+      state.homePageMode = action.payload;
     },
     setUserTokenId(state, action) {
       state.userTokenId = action.payload;

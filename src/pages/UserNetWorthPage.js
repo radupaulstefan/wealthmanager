@@ -10,11 +10,7 @@ const UserNetWorthPage = props => {
     <div>
       {currentUser.userLoggedIn && (
         <div>
-          <Row>
-            <Col>
-              <UserNetWorth></UserNetWorth>
-            </Col>
-          </Row>
+          <UserNetWorth></UserNetWorth>
         </div>
       )}
       {!currentUser.userLoggedIn && (

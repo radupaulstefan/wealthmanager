@@ -34,6 +34,7 @@ const Auth = () => {
       dispatch(currentUserActions.setUserDisplayName(responseObj.displayName));
       dispatch(currentUserActions.setUserTokenId(responseObj.idToken));
       dispatch(currentUserActions.setUserUID(responseObj.localId));
+      dispatch(currentUserActions.setHomePageMode(true));
       history.push({
         pathname: 'networth',
       });

@@ -65,6 +65,7 @@ const CreateUser = () => {
       });
       dispatch(currentUserActions.setUserLoggedIn(true));
       dispatch(currentUserActions.setUserTokenId(createAccountObj.idToken));
+      dispatch(currentUserActions.setHomePageMode(true));
       dispatch(
         currentUserActions.setUserDisplayName(
           firstNameValue + ' ' + lastNameValue

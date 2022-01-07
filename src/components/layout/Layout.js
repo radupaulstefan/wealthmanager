@@ -1,17 +1,18 @@
 import MainNavigation from './MainNavigation';
-import SideBar from './SideBar';
-import { Container, Row, Col } from 'react-bootstrap';
+import MenuBar from './MenuBar';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 const Layout = props => {
   const userLoggedIn = useSelector(state => state.currentUser.userLoggedIn);
+  const homePageMode = useSelector(state => state.currentUser.homePageMode);
   return (
-    <Container fluid>
+    <Container>
       <Row>
         <MainNavigation />
       </Row>
+      <Row>{userLoggedIn && homePageMode && <MenuBar />}</Row>
       <Row>
-        <Col lg="1">{userLoggedIn && <SideBar />}</Col>
         <Col className="p-0">
           <main>{props.children}</main>
         </Col>
