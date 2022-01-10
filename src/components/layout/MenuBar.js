@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const MenuBar = () => {
   const history = useHistory();
-  const [netWorthActive, setNetWorthActive] = useState(false);
+  const [netWorthActive, setNetWorthActive] = useState(true);
   const [budgetActive, setBudgetActive] = useState(false);
   const [plannerActive, setPlannerActive] = useState(false);
 
