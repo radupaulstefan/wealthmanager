@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialCryptoState = { items: [] };
+const initialCryptoState = { items: [], cryptoList: [] };
 
 const cryptoSlice = createSlice({
   name: 'crypto',
@@ -16,6 +16,14 @@ const cryptoSlice = createSlice({
     },
     setCrypto(state, action) {
       state.items = action.payload;
+    },
+    setCryptoPrice(state, action) {
+      console.log(state.items, action.payload.symbol);
+      state.items.find(el => el.symbol === action.payload.symbol).price =
+        action.payload.price;
+    },
+    setCryptoList(state, action) {
+      state.cryptoList = action.payload;
     },
     modifyCryptoUnits(state, action) {
       state.items.find(el => el.symbol === action.payload.symbol).units =

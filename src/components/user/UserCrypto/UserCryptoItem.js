@@ -35,15 +35,25 @@ const UserCryptoItem = props => {
     setSymbol(props.symbol);
   }, [crypto]);
 
-  if (props.units === 0) {
-    dispatch(deleteCrypto(symbol));
-  }
   return (
     <Container>
       <FinancialInstrumentFrame onRemoveItemClick={handleRemoveItemClick}>
-        <Col className={`border border-${SITE_THEME}`}>{symbol}</Col>
-        <Col className={`border border-${SITE_THEME}`}>{props.price}</Col>
-        <Col className={`border border-${SITE_THEME}`}>
+        <Col
+          style={{ cursor: 'default' }}
+          className={`border border-${SITE_THEME}`}
+        >
+          {symbol.toUpperCase()}
+        </Col>
+        <Col
+          style={{ cursor: 'default' }}
+          className={`border border-${SITE_THEME}`}
+        >
+          {props.price}
+        </Col>
+        <Col
+          style={{ cursor: 'default' }}
+          className={`border border-${SITE_THEME}`}
+        >
           <UnitsInput
             onChange={handleCryptoUnitsChange}
             onPlusClick={handlePlusButtonClick}
@@ -51,7 +61,10 @@ const UserCryptoItem = props => {
             units={props.units}
           />
         </Col>
-        <Col className={`border border-${SITE_THEME}`}>
+        <Col
+          style={{ cursor: 'default' }}
+          className={`border border-${SITE_THEME}`}
+        >
           <Col>{(props.price * props.units).toFixed(2)}</Col>
         </Col>
       </FinancialInstrumentFrame>

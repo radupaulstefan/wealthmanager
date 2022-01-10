@@ -1,29 +1,93 @@
 import { cryptoActions } from '../store/crypto-slice';
 import { DATABASE_BASE_URL } from '../helpers/constants';
 
-export const addCrypto = crypto => {
+export const getCryptoCoinPrice = symbol => {
   return (dispatch, getState) => {
     const state = getState();
+    const cryptoItem = state.crypto.cryptoList.find(
+      el => el.symbol === symbol.toLowerCase()
+    );
+    console.log(cryptoItem);
     return fetch(
-      DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/crypto.json`,
+      'https://api.coingecko.com/api/v3' +
+        `/simple/price?ids=${cryptoItem.id}&vs_currencies=usd`,
       {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(crypto),
       }
     )
       .then(response => response.json())
       .then(result => {
         dispatch(
-          cryptoActions.addCrypto({
-            ...crypto,
-            generatedId: result.name,
+          cryptoActions.setCryptoPrice({
+            symbol: symbol,
+            price: Object.values(result)[0].usd,
           })
         );
       });
+  };
+};
+
+export const addCryptoList = () => {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    return fetch('https://api.coingecko.com/api/v3' + `/coins/list`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(result => dispatch(cryptoActions.setCryptoList(result)));
+  };
+};
+
+export const addCrypto = crypto => {
+  return (dispatch, getState) => {
+    const state = getState();
+    const cryptoItem = state.crypto.cryptoList.find(
+      el => el.symbol === crypto.symbol.toLowerCase()
+    );
+    crypto.symbol = crypto.symbol.toLowerCase();
+    if (cryptoItem !== undefined) {
+      return fetch(
+        'https://api.coingecko.com/api/v3' +
+          `/simple/price?ids=${cryptoItem.id}&vs_currencies=usd`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+        .then(response => response.json())
+        .then(result => {
+          crypto.price = Object.values(result)[0].usd;
+          fetch(
+            DATABASE_BASE_URL +
+              `/users/${state.currentUser.userUID}/netWorth/crypto.json`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(crypto),
+            }
+          )
+            .then(response => response.json())
+            .then(secondResult => {
+              dispatch(
+                cryptoActions.addCrypto({
+                  ...crypto,
+                  generatedId: secondResult.name,
+                })
+              );
+            });
+        });
+    }
   };
 };
 
