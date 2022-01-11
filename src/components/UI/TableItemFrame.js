@@ -1,7 +1,7 @@
-import { Row, Col, Button } from 'react-bootstrap';
+import { Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
-const FinancialInstrumentFrame = props => {
+const TableItemFrame = props => {
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
   const handleItemMouseEnter = () => {
     setShowDeleteBtn(true);
@@ -27,4 +27,4 @@ const FinancialInstrumentFrame = props => {
   );
 };
 
-export default FinancialInstrumentFrame;
+export default TableItemFrame;

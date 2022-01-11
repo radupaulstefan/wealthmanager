@@ -2,7 +2,6 @@ import { Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import UserNetWorth from '../components/user/UserNetWorth';
-import '../App.css';
 
 const UserNetWorthPage = props => {
   const currentUser = useSelector(state => state.currentUser);
@@ -25,19 +24,6 @@ const UserNetWorthPage = props => {
           </Row>
         )}
       </Row>
-      <div class="container testimonial-group">
-        <div class="row text-center">
-          <div class="col-4">1</div>
-          <div class="col-4">2</div>
-          <div class="col-4">3</div>
-          <div class="col-4">4</div>
-          <div class="col-4">5</div>
-          <div class="col-4">6</div>
-          <div class="col-4">7</div>
-          <div class="col-4">8</div>
-          <div class="col-4">9</div>
-        </div>
-      </div>
     </>
   );
 };

@@ -5,13 +5,12 @@ import {
   changeCryptoUnits,
   incrementCryptoUnits,
   decrementCryptoUnits,
-  getCryptoCoinPrice,
 } from '../../../actions/userCryptoActions';
 import { useEffect, useState } from 'react';
 import UnitsInput from '../../UI/UnitsInput';
-import FinancialInstrumentFrame from '../../UI/FinancialInstrumentFrame';
 import { SITE_THEME } from '../../../helpers/constants';
 import { useSelector } from 'react-redux';
+import TableItemFrame from '../../UI/TableItemFrame';
 
 const UserCryptoItem = props => {
   const dispatch = useDispatch();
@@ -38,39 +37,45 @@ const UserCryptoItem = props => {
   }, [crypto]);
 
   return (
-    <Container>
-      <FinancialInstrumentFrame onRemoveItemClick={handleRemoveItemClick}>
-        <Col
-          style={{ cursor: 'default' }}
-          className={`border border-${SITE_THEME}`}
-        >
-          {symbol.toUpperCase()}
-        </Col>
-        <Col
-          style={{ cursor: 'default' }}
-          className={`border border-${SITE_THEME}`}
-        >
-          {props.price}
-        </Col>
-        <Col
-          style={{ cursor: 'default' }}
-          className={`border border-${SITE_THEME}`}
-        >
-          <UnitsInput
-            onChange={handleCryptoUnitsChange}
-            onPlusClick={handlePlusButtonClick}
-            onMinusClick={handleMinusButtonClick}
-            units={props.units}
-          />
-        </Col>
-        <Col
-          style={{ cursor: 'default' }}
-          className={`border border-${SITE_THEME}`}
-        >
-          <Col>{(props.price * props.units).toFixed(2)}</Col>
-        </Col>
-      </FinancialInstrumentFrame>
-    </Container>
+    <TableItemFrame onRemoveItemClick={handleRemoveItemClick}>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[0].xs}
+        lg={props.sizes[0].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        {symbol.toUpperCase()}
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[1].xs}
+        lg={props.sizes[1].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        {props.price}
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[2].xs}
+        lg={props.sizes[2].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        <UnitsInput
+          onChange={handleCryptoUnitsChange}
+          onPlusClick={handlePlusButtonClick}
+          onMinusClick={handleMinusButtonClick}
+          units={props.units}
+        />
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[3].xs}
+        lg={props.sizes[3].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        <Col>{(props.price * props.units).toFixed(2)}</Col>
+      </Col>
+    </TableItemFrame>
   );
 };
 

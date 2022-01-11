@@ -12,8 +12,9 @@ import {
   incrementInterestRate,
   decrementInterestRate,
 } from '../../../actions/userCashActions';
-import FinancialInstrumentFrame from '../../UI/FinancialInstrumentFrame';
+import FinancialInstrumentFrame from '../../UI/TableItemFrame';
 import { SITE_THEME } from '../../../helpers/constants';
+import TableItemFrame from '../../UI/TableItemFrame';
 
 const UserCashItem = props => {
   const [nextYearValue, setNextYearValue] = useState(0);
@@ -59,36 +60,59 @@ const UserCashItem = props => {
   }, [userCash]);
 
   return (
-    <Container>
-      <FinancialInstrumentFrame onRemoveItemClick={handleRemoveItemClick}>
-        {' '}
-        <Col lg="2" className={`border border-${SITE_THEME}`}>
-          {symbol}
-        </Col>
-        <Col lg="2" className={`border border-${SITE_THEME}`}>
-          <UnitsInput
-            onChange={handleUnitsChange}
-            onPlusClick={handleUnitsPlusButtonClick}
-            onMinusClick={handleUnitsMinusButtonClick}
-            units={props.units}
-          />
-        </Col>
-        <Col lg="2" className={`border border-${SITE_THEME}`}>
-          <UnitsInput
-            onChange={handleInterestRateChange}
-            onPlusClick={handleInterestRatePlusButtonClick}
-            onMinusClick={handleInterestRateMinusButtonClick}
-            units={props.interestRate}
-          />
-        </Col>
-        <Col lg="2" className={`border border-${SITE_THEME}`}>
-          {props.annualInflation}
-        </Col>
-        <Col lg="3" className={`border border-${SITE_THEME}`}>
-          {nextYearValue}
-        </Col>
-      </FinancialInstrumentFrame>
-    </Container>
+    <TableItemFrame onRemoveItemClick={handleRemoveItemClick}>
+      {' '}
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[0].xs}
+        lg={props.sizes[0].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        {symbol}
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[1].xs}
+        lg={props.sizes[1].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        <UnitsInput
+          onChange={handleUnitsChange}
+          onPlusClick={handleUnitsPlusButtonClick}
+          onMinusClick={handleUnitsMinusButtonClick}
+          units={props.units}
+        />
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[2].xs}
+        lg={props.sizes[2].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        <UnitsInput
+          onChange={handleInterestRateChange}
+          onPlusClick={handleInterestRatePlusButtonClick}
+          onMinusClick={handleInterestRateMinusButtonClick}
+          units={props.interestRate}
+        />
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[3].xs}
+        lg={props.sizes[3].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        {props.annualInflation}
+      </Col>
+      <Col
+        style={{ display: 'inline-block' }}
+        xs={props.sizes[4].xs}
+        lg={props.sizes[4].lg}
+        className={`border border-${SITE_THEME}`}
+      >
+        {nextYearValue}
+      </Col>
+    </TableItemFrame>
   );
 };
 

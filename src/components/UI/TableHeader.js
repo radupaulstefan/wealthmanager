@@ -1,11 +1,12 @@
-import { Col, Row, Container } from 'react-bootstrap';
-import { SITE_THEME } from '../../../helpers/constants';
+import { Col } from 'react-bootstrap';
+import { SITE_THEME } from '../../helpers/constants';
 
-const UserStockItemHeader = props => {
+const TableHeader = props => {
   return (
     <>
-      {props.columns.map(el => (
+      {props.columns.map((el, index) => (
         <Col
+          key={`col-header-${el.name}-${index}`}
           style={{ display: 'inline-block', fontSize: 18, fontWeight: 'bold' }}
           className={`border border-${SITE_THEME}`}
           xs={el.xs}
@@ -19,4 +20,4 @@ const UserStockItemHeader = props => {
   );
 };
 
-export default UserStockItemHeader;
+export default TableHeader;
