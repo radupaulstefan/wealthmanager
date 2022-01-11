@@ -40,15 +40,30 @@ const UserStockItem = props => {
   }
 
   return (
-    <Container>
+    <>
       <FinancialInstrumentFrame onRemoveItemClick={handleRemoveItemClick}>
-        <Col md="2" className={`border border-${SITE_THEME}`}>
+        <Col
+          style={{ display: 'inline-block' }}
+          xs={props.sizes[0].xs}
+          lg={props.sizes[0].lg}
+          className={`m-0 border border-${SITE_THEME}`}
+        >
           {props.symbol}
         </Col>
-        <Col md="2" className={`border border-${SITE_THEME}`}>
+        <Col
+          style={{ display: 'inline-block' }}
+          xs={props.sizes[1].xs}
+          lg={props.sizes[1].lg}
+          className={`border border-${SITE_THEME}`}
+        >
           {props.price}
         </Col>
-        <Col md="4" className={`border border-${SITE_THEME}`}>
+        <Col
+          style={{ display: 'inline-block' }}
+          xs={props.sizes[2].xs}
+          lg={props.sizes[2].lg}
+          className={`border border-${SITE_THEME}`}
+        >
           <UnitsInput
             onChange={handleStockUnitsChange}
             onPlusClick={handlePlusButtonClick}
@@ -56,11 +71,16 @@ const UserStockItem = props => {
             units={props.units}
           />
         </Col>
-        <Col md="3" className={`border border-${SITE_THEME}`}>
+        <Col
+          style={{ display: 'inline-block' }}
+          xs={props.sizes[3].xs}
+          lg={props.sizes[3].lg}
+          className={`border border-${SITE_THEME}`}
+        >
           <Col>{(props.price * props.units).toFixed(2)}</Col>
         </Col>
       </FinancialInstrumentFrame>
-    </Container>
+    </>
   );
 };
 

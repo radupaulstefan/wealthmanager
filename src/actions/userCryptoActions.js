@@ -1,5 +1,10 @@
 import { cryptoActions } from '../store/crypto-slice';
-import { DATABASE_BASE_URL } from '../helpers/constants';
+import {
+  helpFetchMarketAssets,
+  helpDeleteMarketAsset,
+  helpAddMarketAsset,
+  helpChangeMarketAssetsUnits,
+} from '../helpers/marketAssetsHelper';
 
 export const getCryptoCoinPrice = symbol => {
   return (dispatch, getState) => {
@@ -7,7 +12,6 @@ export const getCryptoCoinPrice = symbol => {
     const cryptoItem = state.crypto.cryptoList.find(
       el => el.symbol === symbol.toLowerCase()
     );
-    console.log(cryptoItem);
     return fetch(
       'https://api.coingecko.com/api/v3' +
         `/simple/price?ids=${cryptoItem.id}&vs_currencies=usd`,
@@ -30,7 +34,7 @@ export const getCryptoCoinPrice = symbol => {
   };
 };
 
-export const addCryptoList = () => {
+export const getAllCryptoList = () => {
   return (dispatch, getState) => {
     const state = getState();
 
@@ -66,26 +70,12 @@ export const addCrypto = crypto => {
         .then(response => response.json())
         .then(result => {
           crypto.price = Object.values(result)[0].usd;
-          fetch(
-            DATABASE_BASE_URL +
-              `/users/${state.currentUser.userUID}/netWorth/crypto.json`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(crypto),
-            }
-          )
-            .then(response => response.json())
-            .then(secondResult => {
-              dispatch(
-                cryptoActions.addCrypto({
-                  ...crypto,
-                  generatedId: secondResult.name,
-                })
-              );
-            });
+          helpAddMarketAsset(
+            crypto,
+            dispatch,
+            cryptoActions.addCrypto,
+            `/users/${state.currentUser.userUID}/netWorth/crypto.json`
+          );
         });
     }
   };
@@ -94,32 +84,11 @@ export const addCrypto = crypto => {
 export const fetchCrypto = () => {
   return (dispatch, getState) => {
     const state = getState();
-    fetch(
-      DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/crypto.json`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then(response => response.json())
-      .then(result => {
-        if (result) {
-          const keys = Object.keys(result);
-          dispatch(
-            cryptoActions.setCrypto(
-              Object.values(result).map((el, index) => ({
-                generatedId: keys[index],
-                units: el.units,
-                symbol: el.symbol,
-                price: el.price,
-              }))
-            )
-          );
-        }
-      });
+    helpFetchMarketAssets(
+      dispatch,
+      cryptoActions.setCrypto,
+      `/users/${state.currentUser.userUID}/netWorth/crypto.json`
+    );
   };
 };
 
@@ -127,20 +96,12 @@ export const deleteCrypto = symbol => {
   return (dispatch, getState) => {
     const state = getState();
     const cryptoToDelete = state.crypto.items.find(el => el.symbol === symbol);
-    return fetch(
-      DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToDelete.generatedId}.json`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then(response => response.json())
-      .then(result => {
-        dispatch(cryptoActions.deleteCrypto(cryptoToDelete));
-      });
+    return helpDeleteMarketAsset(
+      cryptoToDelete,
+      dispatch,
+      cryptoActions.deleteCrypto,
+      `/users/${state.currentUser.userUID}/netWorth/crypto`
+    );
   };
 };
 
@@ -148,29 +109,13 @@ export const changeCryptoUnits = (symbol, newUnits) => {
   return (dispatch, getState) => {
     const state = getState();
     const cryptoToChange = state.crypto.items.find(el => el.symbol === symbol);
-    if (newUnits >= 0)
-      return fetch(
-        DATABASE_BASE_URL +
-          `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToChange.generatedId}/.json`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            units: newUnits,
-          }),
-        }
-      )
-        .then(response => response.json())
-        .then(result => {
-          dispatch(
-            cryptoActions.modifyCryptoUnits({
-              symbol: symbol,
-              units: newUnits,
-            })
-          );
-        });
+    return helpChangeMarketAssetsUnits(
+      cryptoToChange,
+      newUnits,
+      dispatch,
+      cryptoActions.modifyCryptoUnits,
+      `/users/${state.currentUser.userUID}/netWorth/crypto`
+    );
   };
 };
 
@@ -178,28 +123,13 @@ export const incrementCryptoUnits = symbol => {
   return (dispatch, getState) => {
     const state = getState();
     const cryptoToChange = state.crypto.items.find(el => el.symbol === symbol);
-    return fetch(
-      DATABASE_BASE_URL +
-        `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToChange.generatedId}/.json`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          units: +cryptoToChange.units + 1,
-        }),
-      }
-    )
-      .then(response => response.json())
-      .then(result => {
-        dispatch(
-          cryptoActions.modifyCryptoUnits({
-            symbol: symbol,
-            units: +cryptoToChange.units + 1,
-          })
-        );
-      });
+    return helpChangeMarketAssetsUnits(
+      cryptoToChange,
+      +cryptoToChange.units + 1,
+      dispatch,
+      cryptoActions.modifyCryptoUnits,
+      `/users/${state.currentUser.userUID}/netWorth/crypto`
+    );
   };
 };
 
@@ -207,28 +137,13 @@ export const decrementCryptoUnits = symbol => {
   return (dispatch, getState) => {
     const state = getState();
     const cryptoToChange = state.crypto.items.find(el => el.symbol === symbol);
-    if (+cryptoToChange.units - 1 >= 0)
-      return fetch(
-        DATABASE_BASE_URL +
-          `/users/${state.currentUser.userUID}/netWorth/crypto/${cryptoToChange.generatedId}/.json`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            units: +cryptoToChange.units - 1,
-          }),
-        }
-      )
-        .then(response => response.json())
-        .then(result => {
-          dispatch(
-            cryptoActions.modifyCryptoUnits({
-              symbol: symbol,
-              units: +cryptoToChange.units - 1,
-            })
-          );
-        });
+
+    return helpChangeMarketAssetsUnits(
+      cryptoToChange,
+      +cryptoToChange.units - 1,
+      dispatch,
+      cryptoActions.modifyCryptoUnits,
+      `/users/${state.currentUser.userUID}/netWorth/crypto`
+    );
   };
 };

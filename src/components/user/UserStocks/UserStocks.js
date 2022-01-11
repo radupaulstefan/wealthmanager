@@ -1,6 +1,5 @@
-import { ListGroup, Button } from 'react-bootstrap';
-import UserStockItemHeader from './UserStockItemHeader';
-import UserStockItemList from './UserStockItemList';
+import { ListGroup, Button, Container, Row } from 'react-bootstrap';
+import UserStockItemTable from './UserStockItemTable';
 import { useSelector } from 'react-redux';
 import { fetchStocks } from '../../../actions/userStocksActions';
 import { useEffect } from 'react';
@@ -14,13 +13,26 @@ const UserStocks = props => {
     dispatch(fetchStocks());
   }, []);
   return (
-    <>
-      <ListGroup as="ul">
-        <UserStockItemHeader></UserStockItemHeader>
-        <UserStockItemList stockList={userStocks} />
-        <UserAddStockInput />
-      </ListGroup>
-    </>
+    <Container>
+      <Row
+        style={{
+          display: 'block',
+          overflowX: 'auto',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <UserStockItemTable
+          header={[
+            { name: 'Symbol', xs: '4', lg: '2' },
+            { name: 'Price', xs: '4', lg: '2' },
+            { name: 'Units', xs: '4', lg: '3' },
+            { name: 'Total', xs: '4', lg: '2' },
+          ]}
+          stockList={userStocks}
+        />
+        {/* <UserAddStockInput /> */}
+      </Row>
+    </Container>
   );
 };
 export default UserStocks;

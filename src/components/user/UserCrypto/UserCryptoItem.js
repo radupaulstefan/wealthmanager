@@ -1,10 +1,11 @@
-import { Col, Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import {
   deleteCrypto,
   changeCryptoUnits,
   incrementCryptoUnits,
   decrementCryptoUnits,
+  getCryptoCoinPrice,
 } from '../../../actions/userCryptoActions';
 import { useEffect, useState } from 'react';
 import UnitsInput from '../../UI/UnitsInput';
@@ -33,6 +34,7 @@ const UserCryptoItem = props => {
   };
   useEffect(() => {
     setSymbol(props.symbol);
+    //dispatch(getCryptoCoinPrice(symbol));
   }, [crypto]);
 
   return (

@@ -38,7 +38,6 @@ const UserAddCryptoInput = props => {
     dispatch(addCrypto({ symbol: text, price: 0, units: 0 }));
     symbolRef.current.value = '';
     setSymbolInputValue('');
-    dispatch(getCryptoCoinPrice(text));
   };
 
   useEffect(() => {

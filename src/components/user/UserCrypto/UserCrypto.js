@@ -3,7 +3,10 @@ import UserCryptoItemHeader from './UserCryptoItemHeader';
 import UserCryptoItemList from './UserCryptoItemList';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchCrypto, addCryptoList } from '../../../actions/userCryptoActions';
+import {
+  fetchCrypto,
+  getAllCryptoList,
+} from '../../../actions/userCryptoActions';
 import UserAddCryptoInput from './UserAddCryptoInput';
 
 const UserCrypto = props => {
@@ -11,7 +14,7 @@ const UserCrypto = props => {
   const userCrypto = useSelector(state => state.crypto.items);
   useEffect(() => {
     dispatch(fetchCrypto());
-    dispatch(addCryptoList());
+    dispatch(getAllCryptoList());
   }, []);
 
   return (

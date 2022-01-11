@@ -18,7 +18,6 @@ const cryptoSlice = createSlice({
       state.items = action.payload;
     },
     setCryptoPrice(state, action) {
-      console.log(state.items, action.payload.symbol);
       state.items.find(el => el.symbol === action.payload.symbol).price =
         action.payload.price;
     },
