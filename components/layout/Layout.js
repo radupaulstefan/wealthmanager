@@ -1,13 +1,11 @@
 import MainNavigation from "./MainNavigation";
 import MenuBar from "./MenuBar";
 import { Container } from "@mui/material";
-// import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const Layout = (props) => {
-  const userLoggedIn = true;
-  const homePageMode = true;
-  // const userLoggedIn = useSelector(state => state.currentUser.userLoggedIn);
-  // const homePageMode = useSelector(state => state.currentUser.homePageMode);
+  const userLoggedIn = useSelector((state) => state.currentUser.userLoggedIn);
+  const homePageMode = useSelector((state) => state.currentUser.homePageMode);
   return (
     <Container fluid>
       <MainNavigation />
